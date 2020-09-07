@@ -15,10 +15,14 @@ DNS_SERVERS="192.168.1.2"
 SSH=22      # SSH port to connect
 SSHD=22     # SSHd server port
 
-# Activer le rp_filter 
+# Active le rp_filter dans le Kernel (Cela protège la machine contre les attaques d'IP Spoofing)
 $SYSCTL net.ipv4.conf.all.rp_filter="1"
 
-# Delete all existing chains and rules
+# Active la protection sur les connexions TCP en Time Wait
+# Tout les paquets en Time Wait sont Drop
+$SYSCTL net.ipv4.tcp_rfc1337="1"
+
+# On supprime toutes les règles deja existantes
 $IPTABLES -F
 $IPTABLES -X
 
@@ -61,13 +65,13 @@ $IPTABLES -A INPUT -p udp -j UDP_IN
 # On envoi tout le traffic TCP a la chaine TCP_IN
 $IPTABLES -A INPUT -p tcp -j TCP_IN
 
-# Send all TCP traffic to TCP_OUT chain
+# On envoi tout les Ttaffic TCP a la chaine TCP_OUT
 $IPTABLES -A OUTPUT -p tcp -j TCP_OUT
 
 
 
 #
-# PORTSCAN chain rules
+# Chaine de règles Portscan
 #
 
 # Drop les attaques de type Portscan
@@ -113,21 +117,48 @@ $IPTABLES -A SPOOFING ! -i lo -d $BROADCAST -j DROP
 $IPTABLES -A SPOOFING -j RETURN
 
 
-# Protection Serveur Five M
+
+           ####
+# Protection Serveur Five M #
+           ####
+           
 # Limitation des paquets / secondes en UDP sur le port 30120
 $IPTABLES -A INPUT -p UDP_IN --destination-port 30120 -m state --state NEW -m limit --limit 8/s --limit-burst 10 -j ACCEPT
 $IPTABLES -A INPUT -p TCP_IN --destination-port 30120 -m limit --limit 14/s -j ACCEPT
+
+# Limitation des paquets / secondes en TCP sur le port 30120 pour mieux encaisser les attaques de type Layer 7
+$IPTABLES -A OUTPUT -p TCP_OUT --destionation-port 30120 -m limit --limit 4/s -j ACCEPT
+
 # Limitation des paquets / secondes en UDP sur les connexions établies sur le port 30120
 $IPTABLES -A INPUT -m state --state RELATED,ESTABLISHED -m limit --limit 16/s --limit-burst 20 -j ACCEPT
 
+
+# Protection Machine
 # On force la vérification des Paquets en SYN
 iptables -A COMMON -p tcp ! --syn -m state --state NEW -j DROP
 
 # Ouvertures des Ports Indispensable 
 $IPTABLES -A TCP_IN -p tcp --dport 22 -j ACCEPT
+$IPTABLES -A TCP_OUT -p tcp --destionation-port 80 -m limit --limit 3/s --limit-burst 6 -j ACCEPT
 $IPTABLES -A TCP_OUT -p tcp --dport 22 -j ACCEPT
+
 
 # Autoriser les connexions deja établies 
 $IPTABLES -A COMMON -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
-Script pas encore terminé 
+# Partie Indispensable
+# On autorise les connexions DNS sortantes
+for DNS in $DNS_SERVERS; do
+    $IPTABLES -A UDP_OUT -p udp -d $DNS --sport 1024:65535 --dport 53 -j ACCEPT
+done
+
+
+# Faire en soirte de que tout les autres paquets sortant en TCP soit Drop et Logger
+$IPTABLES -A TCP_OUT -m limit --limit 2/min -j LOG --log-prefix "iptables TCP_OUT dropped: " --log-level 7
+$IPTABLES -A TCP_OUT -j DROP
+
+# Faire en soirte de que tout les autres paquets sortant en UDP soit Drop et Logger
+$IPTABLES -A UDP_OUT -m limit --limit 2/min -j LOG --log-prefix "iptables UDP_OUT dropped: " --log-level 7
+$IPTABLES -A UDP_OUT -j DROP
+
+# Script pas encore terminé 
