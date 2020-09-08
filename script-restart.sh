@@ -6,7 +6,7 @@
 #=====================================================================================
 echo "***********************************************************"
 echo `date '+%d-%B-%Y_%H:%M:%S'` " - Arrêt du serveur..."
-echo "Script Restart Serveur Five M by Johan_Paam for Valoria"y
+echo "Script Restart Serveur Five M by Johan_Paam"
 kill -9 `ps -ef | grep "/home/fivem/" | grep -v grep | awk '{print $2}'`
 sleep 2
 echo `date '+%d-%B-%Y_%H:%M:%S'` " - Nettoyage du cache..."
