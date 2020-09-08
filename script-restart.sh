@@ -2,6 +2,8 @@
 # Script Auto Install Five M
 #=====================================================================================
 # Author: Johan_Paam 
+# Si votre serveur se trouve dans un autre répertoire, modifiez le chemin d'accès vers le votre
+# Ce script est fait pour redémarrer votre serveur Five M en vidant automtiquement le cache de votre serveur
 #=====================================================================================
 #=====================================================================================
 echo "***********************************************************"
