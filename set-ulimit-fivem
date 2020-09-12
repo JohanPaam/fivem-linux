@@ -1,0 +1,12 @@
+#!/bin/bash
+# Script set Ulimit 
+#=====================================================================================
+# Author: Johan_Paam 
+# Ce script est fait pour modifier les paramètres Ulimit de votre serveur VPS / Dédié pour augmenter le nombre d'ouverture de fichiers
+#=====================================================================================
+#=====================================================================================
+echo "***********************************************************"
+echo "Mise a jour des paramètres Ulimit"
+ulimit -n 99999
+sleep 4
+echo "Paramètres Ulimit mis a jour"
