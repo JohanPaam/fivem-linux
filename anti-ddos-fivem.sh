@@ -135,7 +135,7 @@ $IPTABLES -A INPUT -m state --state RELATED,ESTABLISHED -m limit --limit 16/s --
 
 # Protection Machine
 # On force la vérification des Paquets en SYN
-iptables -A COMMON -p tcp ! --syn -m state --state NEW -j DROP
+$IPTABLES -A COMMON -p tcp ! --syn -m state --state NEW -j DROP
 
 # Ouvertures des Ports Indispensable 
 $IPTABLES -A TCP_IN -p tcp --dport 22 -j ACCEPT
