@@ -5,7 +5,7 @@
 # C'est un script de prévention contre les attaques, les attaques ne seront pas totalement contrer uniquement atténué et réduite au maximum ! #
 
 # On defini les variables
-SYSCTL=/usr/bin/sysctl
+#SYSCTL=/usr/bin/sysctl
 IPTABLES=/usr/bin/iptables
 IPTABLES_SAVE=/usr/bin/iptables-save
 IPTABLES_RULE_FILE=/etc/iptables/iptables.rules
@@ -16,11 +16,11 @@ SSH=22      # SSH port to connect
 SSHD=22     # SSHd server port
 
 # Active le rp_filter dans le Kernel (Cela protège la machine contre les attaques d'IP Spoofing)
-$SYSCTL net.ipv4.conf.all.rp_filter="1"
+#$SYSCTL net.ipv4.conf.all.rp_filter="1"
 
 # Active la protection sur les connexions TCP en Time Wait
 # Tout les paquets en Time Wait sont Drop
-$SYSCTL net.ipv4.tcp_rfc1337="1"
+#$SYSCTL net.ipv4.tcp_rfc1337="1"
 
 # On supprime toutes les règles deja existantes
 $IPTABLES -F
