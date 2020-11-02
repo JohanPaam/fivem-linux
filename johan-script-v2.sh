@@ -1,6 +1,5 @@
 #!/bin/bash +x
-
-### Script By Johan_Paam ###
+## Script By Johan_Paam ###
 # ATTENTION !!! #
 # V 1.2 Beta #
 # C'est un script de prévention contre les attaques, les attaques ne seront pas totalement contrer uniquement atténué et réduite au maximum ! #
@@ -15,6 +14,14 @@ iptables -A INPUT -p udp -m udp --dport 30120 -j ACCEPT
 iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
 iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp -m tcp --dport 30120 -j ACCEPT
+
+# Autorisation des différentes IPs de Five M
+iptables -A INPUT -s 104.22.46.177 -j ACCEPT # Liste Five M
+iptables -A INPUT -s 104.22.47.177 -j ACCEPT # Liste Five M
+iptables -A INPUT -s 172.67.38.114 -j ACCEPT # Servers Ingress Five M
+iptables -A INPUT -s 51.91.21.135 -j ACCEPT # Serveur d'authentification des clés Nucleus
+iptables -A INPUT -s 207.180.192.35 -j ACCEPT # Serveur Chocohax
+iptables -A INPUT -s 23.39.88.159 -j ACCEPT # API Steam 
 
 # On autorise les connexions deja établies 
 iptables -A INPUT -i eth0 -m state --state ESTABLISHED,RELATED -j ACCEPT
@@ -75,10 +82,78 @@ iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
 #sudo sysctl -w net.ipv4.conf.default.log_martians=1
 #sudo sysctl -p
 
-# Autorisation des différentes IPs de Five M
-iptables -A INPUT -s 104.22.46.177 -j ACCEPT # Liste Five M
-iptables -A INPUT -s 104.22.47.177 -j ACCEPT # Liste Five M
-iptables -A INPUT -s 172.67.38.114 -j ACCEPT # Servers Ingress Five M
-iptables -A INPUT -s 51.91.21.135 -j ACCEPT # Serveur d'authentification des clés Nucleus
-iptables -A INPUT -s 207.180.192.35 -j ACCEPT # Serveur Chocohax
-iptables -A INPUT -s 23.39.88.159 -j ACCEPT # API Steam 
+# Blocage de Pays 
+ipset -N france hash:net
+ipset -N canada hash:net
+ipset -N belgique hash:net
+ipset -N martinique hash:net
+ipset -N maurice hash:net
+ipset -N guyane hash:net
+ipset -N mayotte hash:net
+ipset -N maroc hash:net
+ipset -N algerie hash:net
+ipset -N tunisie hash:net
+ipset -N luxembourg hash:net
+ipset -N suisse hash:net
+ipset -N guadeloupe hash:net
+ipset -N reunion hash:net
+
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/fr.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/ca.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/be.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/mq.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/mu.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/gf.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/yt.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/ma.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/dz.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/tn.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/lu.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/nc.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/ch.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/gp.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/re.zone
+
+for i in $(cat /etc/fr.zone ); do ipset -A france $i; done
+for i in $(cat /etc/ca.zone ); do ipset -A canada $i; done
+for i in $(cat /etc/be.zone ); do ipset -A belgique $i; done
+for i in $(cat /etc/be.zone ); do ipset -A martinique $i; done
+for i in $(cat /etc/be.zone ); do ipset -A maurice $i; done
+for i in $(cat /etc/be.zone ); do ipset -A guyane $i; done
+for i in $(cat /etc/be.zone ); do ipset -A mayotte $i; done
+for i in $(cat /etc/be.zone ); do ipset -A maroc $i; done
+for i in $(cat /etc/be.zone ); do ipset -A algerie $i; done
+for i in $(cat /etc/be.zone ); do ipset -A tunisie $i; done
+for i in $(cat /etc/be.zone ); do ipset -A luxembourg $i; done
+for i in $(cat /etc/be.zone ); do ipset -A suisse $i; done
+for i in $(cat /etc/be.zone ); do ipset -A guadeloupe $i; done
+for i in $(cat /etc/be.zone ); do ipset -A reunion $i; done
+
+iptables -A INPUT -m set --match-set belgique src -j ACCEPT
+iptables -A OUTPUT -m set --match-set belgique src -j ACCEPT
+iptables -A INPUT -m set --match-set france src -j ACCEPT
+iptables -A OUTPUT -m set --match-set france src -j ACCEPT
+iptables -A INPUT -m set --match-set canada src -j ACCEPT
+iptables -A OUTPUT -m set --match-set canada src -j ACCEPT
+iptables -A INPUT -m set --match-set martinique src -j ACCEPT
+iptables -A OUTPUT -m set --match-set martinique src -j ACCEPT
+iptables -A INPUT -m set --match-set maurice src -j ACCEPT
+iptables -A OUTPUT -m set --match-set maurice src -j ACCEPT
+iptables -A INPUT -m set --match-set guyane src -j ACCEPT
+iptables -A OUTPUT -m set --match-set guyane src -j ACCEPT
+iptables -A INPUT -m set --match-set mayotte src -j ACCEPT
+iptables -A OUTPUT -m set --match-set mayotte src -j ACCEPT
+iptables -A INPUT -m set --match-set maroc src -j ACCEPT
+iptables -A OUTPUT -m set --match-set maroc src -j ACCEPT
+iptables -A INPUT -m set --match-set algerie src -j ACCEPT
+iptables -A OUTPUT -m set --match-set algerie src -j ACCEPT
+iptables -A INPUT -m set --match-set tunisie src -j ACCEPT
+iptables -A OUTPUT -m set --match-set tunisie src -j ACCEPT
+iptables -A INPUT -m set --match-set luxembourg src -j ACCEPT
+iptables -A OUTPUT -m set --match-set luxembourg src -j ACCEPT
+iptables -A INPUT -m set --match-set suisse src -j ACCEPT
+iptables -A OUTPUT -m set --match-set suisse src -j ACCEPT
+iptables -A INPUT -m set --match-set guadeloupe src -j ACCEPT
+iptables -A OUTPUT -m set --match-set guadeloupe src -j ACCEPT
+iptables -A INPUT -m set --match-set reunion src -j ACCEPT
+iptables -A OUTPUT -m set --match-set reunion src -j ACCEPT
