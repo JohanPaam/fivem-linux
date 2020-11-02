@@ -6,7 +6,7 @@
 # C'est un script de prévention contre les attaques, les attaques ne seront pas totalement contrer uniquement atténué et réduite au maximum ! #
 
 # Fermeture de tout les ports et ouverture des ports nécessaire
-iptanles -P INPUT DROP
+iptables -P INPUT DROP
 iptables -A INPUT -s 45.95.114.64 -j ACCEPT 
 iptables -A INPUT -p udp -m udp --dport 22 -j ACCEPT
 iptables -A INPUT -p udp -m udp --dport 80 -j ACCEPT
