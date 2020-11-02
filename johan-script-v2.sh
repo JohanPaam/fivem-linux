@@ -56,18 +56,12 @@ iptables -A INPUT -s 0.0.0.8/8 -j spoofing
 iptables -A SPOOFING -j RETURN
 
 # Protection contre les attaques de type UDP
-iptables -A INPUT -p udp -j UDPLIMIT
-iptables -N UDPLIMIT
-iptables -A UDPLIMIT -p udp --sport 30120 -m limit --limit 12/s --limit-burst 13 -j ACCEPT
-iptables -A UDPLIMIT -j DROP # On Drop tout au dessus de 12 paquets / seconde
-iptables -A UDPLIMIT -j RETURN
+iptables -A INPUT -p udp --sport 30120 -m limit --limit 12/s --limit-burst 13 -j ACCEPT
+iptables -A INPUT -p udp -j DROP # On Drop tout au dessus de 12 paquets / seconde
 
 # Protection contre les attaques de type TCP SYN
-iptables -A INPUT -p tcp -j SYNLIMIT
-iptables -N SYNLIMIT
-iptables -A SYNLIMIT -p tcp  --syn --sport 30120 -m limit --limit 8/s --limit-burst 9 -j ACCEPT
-iptables -A SYNLIMIT -j DROP # On Drop tout au dessus de 8 paquets / seconde
-iptables -A SYNLIMIT -j RETURN
+iptables -A INPUT -p tcp  --syn --sport 30120 -m limit --limit 8/s --limit-burst 9 -j ACCEPT
+iptables -A INPUT -p --syn -j DROP # On Drop tout au dessus de 8 paquets / seconde
 
 # Protection contre les attaques de type SYN Flood par SYN Proxy
 iptables -t raw -A PREROUTING -p tcp -m tcp --syn -j CT --notrack
