@@ -6,15 +6,15 @@
 # C'est un script de prévention contre les attaques, les attaques ne seront pas totalement contrer uniquement atténué et réduite au maximum ! #
 
 # Fermeture de tout les ports et ouverture des ports nécessaire
-iptables -A INPUT -p udp -m udp --dport 0:21 -j DROP
-iptables -A INPUT -p udp -m udp --dport 23:79 -j DROP
-iptables -A INPUT -p udp -m udp --dport 81:30119 -j DROP
-iptables -A INPUT -p udp -m udp --dport 30121:65500 -j DROP
+iptanles -P INPUT DROP
+iptables -A INPUT -s 45.95.114.64 -j ACCEPT 
+iptables -A INPUT -p udp -m udp --dport 22 -j ACCEPT
+iptables -A INPUT -p udp -m udp --dport 80 -j ACCEPT
+iptables -A INPUT -p udp -m udp --dport 30120 -j ACCEPT
 
-iptables -A INPUT -p tcp -m tcp --dport 0:21 -j DROP
-iptables -A INPUT -p tcp -m tcp --dport 23:79 -j DROP
-iptables -A INPUT -p tcp -m tcp --dport 81:30119 -j DROP
-iptables -A INPUT -p tcp -m tcp --dport 30121:65500 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 30120 -j ACCEPT
 
 # On autorise les connexions deja établies 
 iptables -A INPUT -i eth0 -m state --state ESTABLISHED,RELATED -j ACCEPT
@@ -76,4 +76,3 @@ iptables -A INPUT -s 104.22.46.177 -j ACCEPT # Liste Five M
 iptables -A INPUT -s 104.22.47.177 -j ACCEPT # Liste Five M
 iptables -A INPUT -s 172.67.38.114 -j ACCEPT # Servers Ingress Five M
 iptables -A INPUT -s 51.91.21.135 -j ACCEPT # Serveur d'authentification des clés Nucleus
-iptables -A INPUT -s 45.95.114.64 -j ACCEPT 
