@@ -98,6 +98,7 @@ ipset -N suisse hash:net
 ipset -N guadeloupe hash:net
 ipset -N reunion hash:net
 
+cd /etc
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/fr.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/ca.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/be.zone
@@ -113,6 +114,7 @@ wget -P . http://www.ipdeny.com/ipblocks/data/countries/nc.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/ch.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/gp.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/re.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/lb.zone
 
 for i in $(cat /etc/fr.zone ); do ipset -A france $i; done
 for i in $(cat /etc/ca.zone ); do ipset -A canada $i; done
@@ -128,6 +130,7 @@ for i in $(cat /etc/be.zone ); do ipset -A luxembourg $i; done
 for i in $(cat /etc/be.zone ); do ipset -A suisse $i; done
 for i in $(cat /etc/be.zone ); do ipset -A guadeloupe $i; done
 for i in $(cat /etc/be.zone ); do ipset -A reunion $i; done
+for i in $(cat /etc/lb.zone ); do ipset -A liban $i; done
 
 iptables -A INPUT -m set --match-set belgique src -j ACCEPT
 iptables -A OUTPUT -m set --match-set belgique src -j ACCEPT
@@ -157,3 +160,5 @@ iptables -A INPUT -m set --match-set guadeloupe src -j ACCEPT
 iptables -A OUTPUT -m set --match-set guadeloupe src -j ACCEPT
 iptables -A INPUT -m set --match-set reunion src -j ACCEPT
 iptables -A OUTPUT -m set --match-set reunion src -j ACCEPT
+iptables -A INPUT -m set --match-set liban src -j ACCEPT
+iptables -A OUTPUT -m set --match-set liban src -j ACCEPT
