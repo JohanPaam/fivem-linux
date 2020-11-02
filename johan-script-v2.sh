@@ -61,7 +61,7 @@ iptables -A INPUT -p udp -j DROP # On Drop tout au dessus de 12 paquets / second
 
 # Protection contre les attaques de type TCP SYN
 iptables -A INPUT -p tcp  --syn --sport 30120 -m limit --limit 8/s --limit-burst 9 -j ACCEPT
-iptables -A INPUT -p --syn -j DROP # On Drop tout au dessus de 8 paquets / seconde
+iptables -A INPUT -p tcp --syn -j DROP # On Drop tout au dessus de 8 paquets / seconde
 
 # Protection contre les attaques de type SYN Flood par SYN Proxy
 iptables -t raw -A PREROUTING -p tcp -m tcp --syn -j CT --notrack
