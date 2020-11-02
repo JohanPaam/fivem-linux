@@ -6,7 +6,6 @@
 # C'est un script de prévention contre les attaques, les attaques ne seront pas totalement contrer uniquement atténué et réduite au maximum ! #
 
 # Fermeture de tout les ports et ouverture des ports nécessaire
-iptables -P INPUT DROP
 iptables -A INPUT -p udp -m udp --dport 22 -j ACCEPT
 iptables -A INPUT -p udp -m udp --dport 80 -j ACCEPT
 iptables -A INPUT -p udp -m udp --dport 30120 -j ACCEPT
@@ -83,9 +82,21 @@ iptables -A INPUT -s 207.180.192.35 -j ACCEPT # Serveur Chocohax
 iptables -A INPUT -s 23.39.88.159 -j ACCEPT # API Steam 
 iptables -A INPUT -s 149.28.239.174 -j ACCEPT # IP Country
 
-# Blacklist de Pays
+# Whitelist de Pays
 ipset -N france hash:net
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/fr.zone
 for i in $(cat fr.zone ); do ipset -A france $i; done
 iptables -A INPUT -m set --match-set france src -j ACCEPT
 
+ipset -N belgique hash:net
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/be.zone
+for i in $(cat be.zone ); do ipset -A belgique $i; done
+iptables -A INPUT -m set --match-set belgique src -j ACCEPT
+
+ipset -N luxembourg hash:net
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/lu.zone
+for i in $(cat lu.zone ); do ipset -A luxembourg $i; done
+iptables -A INPUT -m set --match-set luxembourg src -j ACCEPT
+
+# On drop tout les paquets 
+iptables -P INPUT DROP
