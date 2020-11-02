@@ -109,27 +109,26 @@ wget -P . http://www.ipdeny.com/ipblocks/data/countries/ma.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/dz.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/tn.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/lu.zone
-wget -P . http://www.ipdeny.com/ipblocks/data/countries/nc.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/ch.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/gp.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/re.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/lb.zone
 
-for i in $(cat /etc/fr.zone ); do ipset -A france $i; done
-for i in $(cat /etc/ca.zone ); do ipset -A canada $i; done
-for i in $(cat /etc/be.zone ); do ipset -A belgique $i; done
-for i in $(cat /etc/be.zone ); do ipset -A martinique $i; done
-for i in $(cat /etc/be.zone ); do ipset -A maurice $i; done
-for i in $(cat /etc/be.zone ); do ipset -A guyane $i; done
-for i in $(cat /etc/be.zone ); do ipset -A mayotte $i; done
-for i in $(cat /etc/be.zone ); do ipset -A maroc $i; done
-for i in $(cat /etc/be.zone ); do ipset -A algerie $i; done
-for i in $(cat /etc/be.zone ); do ipset -A tunisie $i; done
-for i in $(cat /etc/be.zone ); do ipset -A luxembourg $i; done
-for i in $(cat /etc/be.zone ); do ipset -A suisse $i; done
-for i in $(cat /etc/be.zone ); do ipset -A guadeloupe $i; done
-for i in $(cat /etc/be.zone ); do ipset -A reunion $i; done
-for i in $(cat /etc/lb.zone ); do ipset -A liban $i; done
+for i in $(cat fr.zone ); do ipset -A france $i; done
+for i in $(cat ca.zone ); do ipset -A canada $i; done
+for i in $(cat be.zone ); do ipset -A belgique $i; done
+for i in $(cat mq.zone ); do ipset -A martinique $i; done
+for i in $(cat mu.zone ); do ipset -A maurice $i; done
+for i in $(cat gf.zone ); do ipset -A guyane $i; done
+for i in $(cat yt.zone ); do ipset -A mayotte $i; done
+for i in $(cat ma.zone ); do ipset -A maroc $i; done
+for i in $(cat dz.zone ); do ipset -A algerie $i; done
+for i in $(cat tn.zone ); do ipset -A tunisie $i; done
+for i in $(cat lu.zone ); do ipset -A luxembourg $i; done
+for i in $(cat ch.zone ); do ipset -A suisse $i; done
+for i in $(cat gp.zone ); do ipset -A guadeloupe $i; done
+for i in $(cat re.zone ); do ipset -A reunion $i; done
+for i in $(cat lb.zone ); do ipset -A liban $i; done
 
 iptables -A INPUT -m set --match-set belgique src -j ACCEPT
 iptables -A OUTPUT -m set --match-set belgique src -j ACCEPT
