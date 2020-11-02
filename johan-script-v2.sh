@@ -5,7 +5,6 @@
 # C'est un script de prévention contre les attaques, les attaques ne seront pas totalement contrer uniquement atténué et réduite au maximum ! #
 
 # Fermeture de tout les ports et ouverture des ports nécessaire
-iptables -P INPUT DROP
 iptables -A INPUT -p udp -m udp --dport 22 -j ACCEPT
 iptables -A INPUT -p udp -m udp --dport 80 -j ACCEPT
 iptables -A INPUT -p udp -m udp --dport 30120 -j ACCEPT
@@ -21,6 +20,7 @@ iptables -A INPUT -s 172.67.38.114 -j ACCEPT # Servers Ingress Five M
 iptables -A INPUT -s 51.91.21.135 -j ACCEPT # Serveur d'authentification des clés Nucleus
 iptables -A INPUT -s 207.180.192.35 -j ACCEPT # Serveur Chocohax
 iptables -A INPUT -s 23.39.88.159 -j ACCEPT # API Steam 
+iptables -A INPUT -s 149.28.239.174 -j ACCEPT # IP Country
 
 # On autorise les connexions deja établies 
 iptables -A INPUT -i eth0 -m state --state ESTABLISHED,RELATED -j ACCEPT
@@ -161,3 +161,6 @@ iptables -A INPUT -m set --match-set reunion src -j ACCEPT
 iptables -A OUTPUT -m set --match-set reunion src -j ACCEPT
 iptables -A INPUT -m set --match-set liban src -j ACCEPT
 iptables -A OUTPUT -m set --match-set liban src -j ACCEPT
+
+# On drop tout les paquets 
+iptables -P INPUT DROP
