@@ -55,10 +55,14 @@ iptables -A INPUT -s 255.0.0.0/8 -j spoofing
 iptables -A INPUT -s 0.0.0.8/8 -j spoofing
 
 # Protection contre les attaques de type UDP 
-iptables -A INPUT -p udp --sport 30120 -m limit --limit 12/s --limit-burst 14 -j ACCEPT
+iptables -N UDPLIMIT
+iptables -A UDPLIMIT -p udp --sport 30120 -m limit --limit 12/s -j ACCEPT
+iptables -A UDPLIMIT -j DROP # On Drop tout au dessus de 12 paquets / seconde
 
 # Protection contre les attaques de type TCP SYN
-iptables -A INPUT -p tcp  --syn --sport 30120 -m limit --limit 12/s -j ACCEPT
+iptables -N SYNLIMIT
+iptables -A SYNLIMIT -p tcp  --syn --sport 30120 -m limit --limit 8/s -j ACCEPT
+iptables -A SYNLIMIT -j DROP # On Drop tout au dessus de 8 paquets / seconde
 
 # Protection contre les attaques de type SYN Flood par SYN Proxy
 iptables -t raw -A PREROUTING -p tcp -m tcp --syn -j CT --notrack
@@ -70,6 +74,7 @@ sudo sysctl -w net.ipv4.conf.default.rp_filter=1
 sudo sysctl -w net.ipv4.conf.all.rp_filter=1
 sudo sysctl -w net.ipv4.conf.all.log_martians=1
 sudo sysctl -w net.ipv4.conf.default.log_martians=1
+sudo sysctl -p
 
 # Autorisation des différentes IPs de Five M
 iptables -A INPUT -s 104.22.46.177 -j ACCEPT # Liste Five M
