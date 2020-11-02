@@ -6,7 +6,6 @@
 
 # Fermeture de tout les ports et ouverture des ports nécessaire
 iptables -P INPUT DROP
-iptables -A INPUT -s 45.95.114.64 -j ACCEPT 
 iptables -A INPUT -p udp -m udp --dport 22 -j ACCEPT
 iptables -A INPUT -p udp -m udp --dport 80 -j ACCEPT
 iptables -A INPUT -p udp -m udp --dport 30120 -j ACCEPT
