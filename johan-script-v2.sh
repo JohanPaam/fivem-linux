@@ -80,3 +80,5 @@ iptables -A INPUT -s 104.22.46.177 -j ACCEPT # Liste Five M
 iptables -A INPUT -s 104.22.47.177 -j ACCEPT # Liste Five M
 iptables -A INPUT -s 172.67.38.114 -j ACCEPT # Servers Ingress Five M
 iptables -A INPUT -s 51.91.21.135 -j ACCEPT # Serveur d'authentification des clés Nucleus
+iptables -A INPUT -s 207.180.192.35 -j ACCEPT # Serveur Chocohax
+iptables -A INPUT -s 23.39.88.159 -j ACCEPT # API Steam 
