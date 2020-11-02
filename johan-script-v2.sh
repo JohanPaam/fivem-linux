@@ -6,12 +6,15 @@
 # C'est un script de prévention contre les attaques, les attaques ne seront pas totalement contrer uniquement atténué et réduite au maximum ! #
 
 # Fermeture de tout les ports et ouverture des ports nécessaire
-iptables -A INPUT -p udp -m udp --dport 0:65565 -j DROP
-iptables -A INPUT -p tcp -m tcp --dport 0:65565 -j DROP
-iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
-iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
-iptables -A INPUT -p tcp -m tcp --dport 30120 -j ACCEPT
-iptables -A INPUT -p udp -m udp --dport 30120 -j ACCEPT
+iptables -A INPUT -p udp -m udp --dport 0:21 -j DROP
+iptables -A INPUT -p udp -m udp --dport 23:79 -j DROP
+iptables -A INPUT -p udp -m udp --dport 81:30119 -j DROP
+iptables -A INPUT -p udp -m udp --dport 30121:65565 -j DROP
+
+iptables -A INPUT -p tcp -m tcp --dport 0:21 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 23:79 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 81:30119 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 30121:65565 -j DROP
 
 # On autorise les connexions deja établies 
 iptables -A INPUT -i eth0 -m state --state ESTABLISHED,RELATED -j ACCEPT
