@@ -2,7 +2,7 @@
 
 ## Script By Johan_Paam ###
 # ATTENTION !!! #
-# V 1.2 Beta #
+# V 1.5 Release #
 # C'est un script de prévention contre les attaques, les attaques ne seront pas totalement contrer uniquement atténué et réduite au maximum ! #
 
 # Fermeture de tout les ports et ouverture des ports nécessaire
