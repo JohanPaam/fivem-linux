@@ -84,45 +84,89 @@ iptables -A INPUT -s 149.28.239.174 -j ACCEPT # IP Country
 
 # Blacklist de Pays
 
+ipset -N china hash:net
+rm cn.zone
 wget -P . http://www.ipdeny.com/ipblocks/data/countries/cn.zone
 for i in $(cat /etc/cn.zone ); do ipset -A china $i; done
-   iptables -A INPUT -m set --match-set china src -j DROP
-   ipset -N china hash:net
-   rm cn.zone
+iptables -A INPUT -m set --match-set china src -j DROP
 
- wget -P . http://www.ipdeny.com/ipblocks/data/countries/jp.zone
-   for i in $(cat /etc/jp.zone ); do ipset -A japan $i; done
-   iptables -A INPUT -m set --match-set japan src -j DROP
-   ipset -N singapore hash:net
-   rm sg.zone
-  
-  wget -P . http://www.ipdeny.com/ipblocks/data/countries/sg.zone
-   for i in $(cat /etc/sg.zone ); do ipset -A singapore $i; done
-   iptables -A INPUT -m set --match-set singapore src -j DROP
-   ipset -N indonesia hash:net
-   rm id.zone
+ipset -N japan hash:net
+rm jp.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/jp.zone
+for i in $(cat /etc/jp.zone ); do ipset -A japan $i; done
+iptables -A INPUT -m set --match-set japan src -j DROP
 
-  wget -P . http://www.ipdeny.com/ipblocks/data/countries/id.zone
-   for i in $(cat /etc/id.zone ); do ipset -A indonesia $i; done
-   iptables -A INPUT -m set --match-set indonesia src -j DROP
-   ipset -N russia hash:net
-   rm ru.zone
+ipset -N singapore hash:net
+rm sg.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/sg.zone
+for i in $(cat /etc/sg.zone ); do ipset -A singapore $i; done
+iptables -A INPUT -m set --match-set singapore src -j DROP
 
-  wget -P . http://www.ipdeny.com/ipblocks/data/countries/ru.zone
-   for i in $(cat /etc/ru.zone ); do ipset -A russia $i; done
-   iptables -A INPUT -m set --match-set russia src -j DROP
-   ipset -N germany hash:net
-   rm de.zone
+ipset -N indonesia hash:net
+rm id.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/id.zone
+for i in $(cat /etc/id.zone ); do ipset -A indonesia $i; done
+iptables -A INPUT -m set --match-set indonesia src -j DROP
 
-  wget -P . http://www.ipdeny.com/ipblocks/data/countries/de.zone
-   for i in $(cat /etc/de.zone ); do ipset -A germany $i; done
-   iptables -A INPUT -m set --match-set germany src -j DROP
-   ipset -N us hash:net
-   rm us.zone
+ipset -N us hash:net
+rm us.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/us.zone
+for i in $(cat /etc/us.zone ); do ipset -A us $i; done
+iptables -A INPUT -m set --match-set us src -j DROP
 
-  wget -P . http://www.ipdeny.com/ipblocks/data/countries/us.zone
-   for i in $(cat /etc/us.zone ); do ipset -A us $i; done
-   iptables -A INPUT -m set --match-set us src -j DROP
+ipset -N germany hash:net
+rm de.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/de.zone
+for i in $(cat /etc/de.zone ); do ipset -A germany $i; done
+iptables -A INPUT -m set --match-set germany src -j DROP
+
+ipset -N russia hash:net
+rm ru.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/ru.zone
+for i in $(cat /etc/ru.zone ); do ipset -A russia $i; done
+iptables -A INPUT -m set --match-set russia src -j DROP
+
+ipset -N south-africa hash:net
+rm za.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/za.zone
+for i in $(cat /etc/za.zone ); do ipset -A south-africa $i; done
+iptables -A INPUT -m set --match-set south-africa src -j DROP
+
+ipset -N netherlands hash:net
+rm nl.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/nl.zone
+for i in $(cat /etc/nl.zone ); do ipset -A netherlands $i; done
+iptables -A INPUT -m set --match-set netherlands src -j DROP
+
+ipset -N brazil hash:net
+rm br.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/br.zone
+for i in $(cat /etc/br.zone ); do ipset -A brazil $i; done
+iptables -A INPUT -m set --match-set brazil src -j DROP
+
+ipset -N hong-kong hash:net
+rm hk.zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/hk.zone
+for i in $(cat /etc/hk.zone ); do ipset -A hong-kong $i; done
+iptables -A INPUT -m set --match-set hong-kong src -j DROP
+
+ipset -N libya hash:net
+rm ly .zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/ly .zone
+for i in $(cat /etc/ly .zone ); do ipset -A libya $i; done
+iptables -A INPUT -m set --match-set libya src -j DROP
+
+ipset -N qatar hash:net
+rm qa .zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/qa .zone
+for i in $(cat /etc/qa .zone ); do ipset -A qatar $i; done
+iptables -A INPUT -m set --match-set qatar src -j DROP
+
+ipset -N vietnam hash:net
+rm vn .zone
+wget -P . http://www.ipdeny.com/ipblocks/data/countries/vn .zone
+for i in $(cat /etc/vn .zone ); do ipset -A vietnam $i; done
+iptables -A INPUT -m set --match-set vietnam src -j DROP
 
 # On drop tout les paquets 
 iptables -P INPUT DROP
