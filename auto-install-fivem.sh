@@ -22,6 +22,7 @@ sleep 3
 cd /home
 mkdir fivem
 cd /home/fivem
+wget "lien de l'artefact https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/"
 tar xvfJ fx.tar.xz
 cd
 echo "Serveur Five M installer dans le répertoire /home/fivem"
@@ -35,17 +36,16 @@ echo "Installation de Maria-DB"
 sleep 3
 apt-get -y install mariadb-server mariadb-client
 mysql_secure_installation
-service apache2 restart
-
-echo "Installation de PhpMyAdmin"
-sleep 3
-apt install phpmyadmin
-sudo ln -s /usr/share/phpmyadmin /var/www/html
 
 echo "Création d'un utilisateur possédant les privièges Administrateur"
 mysql -u root -p
 UPDATE mysql.user SET plugin = 'mysql_native_password',Password = PASSWORD('NEWPASSWORD') WHERE User = 'root';
 FLUSH PRIVILEGES;
+
+echo "Installation de PhpMyAdmin"
+sleep 3
+apt install phpmyadmin
+sudo ln -s /usr/share/phpmyadmin /var/www/html
 
 echo "Utilisateur : 'auto-install' avec comme mot de pass 'auto-install' a bien été crée"
 echo "Attenion ! Pensez a changer le mot de passe de cet utilisateur !"
