@@ -2,7 +2,6 @@
 # Script install Five M 
 #=====================================================================================
 # Author: Johan_Paam 
-# Ce script est fait pour modifier les paramètres Ulimit de votre serveur VPS / Dédié pour augmenter le nombre d'ouverture de fichiers
 #=====================================================================================
 #=====================================================================================
 echo "***********************************************************"
@@ -47,7 +46,5 @@ sleep 3
 apt install phpmyadmin
 sudo ln -s /usr/share/phpmyadmin /var/www/html
 
-echo "Utilisateur : 'auto-install' avec comme mot de pass 'auto-install' a bien été crée"
-echo "Attenion ! Pensez a changer le mot de passe de cet utilisateur !"
 sleep 5
 echo "Vous pouvez désormais transférer votre serveur Five M et votre base de données en vous connectant sur ce lien 'http://ip-du-serveur/phpmyadmin
