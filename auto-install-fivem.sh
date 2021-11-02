@@ -11,8 +11,7 @@ apt upgrade
 
 echo "Installation des paquets nécessaires"
 sleep 3
-apt install git
-apt install sudo
+apt install ipset htop nload tcpdump curl screen wget sudo git zip unzip
 echo "Paquets installer avec succès"
 sleep 4
 
