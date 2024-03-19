@@ -102,3 +102,6 @@ Attendre la fin de l'installation
 ```
 sudo ln -s /usr/share/phpmyadmin /var/www/html
 ```
+
+
+MariaDB & PhpMyAdmin sont désormais installé et prêt pour utilisation . 
